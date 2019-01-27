@@ -1,11 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, TextInput} from 'react-native';
 
 export default class Attendees extends React.Component {
 
     render() {
         return (<View style={styles.container}>
-            <Text>Form to create attendees 2</Text>
+            <TextInput placeholder="Name of the attendee" style={styles.inputText} maxLength={300} />
         </View>);
     }
 }
@@ -13,8 +13,16 @@ export default class Attendees extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#eef',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    inputText: {
+        height: 50,
+        width: '90%',
+        padding: 10,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        fontSize: 30,
     },
 });
