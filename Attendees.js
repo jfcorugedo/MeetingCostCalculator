@@ -3,9 +3,18 @@ import {StyleSheet, View, Text, TextInput} from 'react-native';
 
 export default class Attendees extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {name: '', salary: 0};
+    }
     render() {
         return (<View style={styles.container}>
-            <TextInput placeholder="Name of the attendee" style={styles.inputText} maxLength={300} />
+            <TextInput
+                placeholder="Name of the attendee"
+                style={styles.inputText}
+                onChangeText={(name) => this.setState({name})} />
+
+                <Text>{this.state.name}</Text>
         </View>);
     }
 }
