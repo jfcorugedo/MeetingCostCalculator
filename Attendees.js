@@ -5,16 +5,26 @@ export default class Attendees extends React.Component {
 
     constructor() {
         super();
-        this.state = {name: '', cost: 0};
+        this.state = {name: '', cost: '', attendees: []};
+    }
+
+    addAttendee(name, cost) {
+        this.setState({attendees: [...this.state.attendees, {name, cost}], name: '', cost: ''})
     }
     render() {
         return (<View style={styles.container}>
             <Text style={styles.title}>Attendees</Text>
             <ScrollView style={styles.attendeesContainer}>
-                <View style={styles.attendee}>
-                    <Text style={styles.name}>Juan Fernandez-Corugedo Igual</Text>
-                    <Text style={styles.cost}>50.0 €/hour</Text>
-                </View>
+                {
+                    this.state.attendees.map(
+                        (attendee, index) =>(
+                            <View style={styles.attendee} key={index}>
+                                <Text style={styles.name}>{attendee.name}</Text>
+                                <Text style={styles.cost}>{attendee.cost} €/hour</Text>
+                            </View>
+                        )
+                    )
+                }
             </ScrollView>
             <View style={styles.form}>
                 <View style={styles.inputWrapper}>
@@ -26,12 +36,12 @@ export default class Attendees extends React.Component {
 
                     <TextInput
                         placeholder="Cost per hour"
-                        value={this.state.cost === 0 ? '' : String(this.state.cost)}
+                        value={this.state.cost}
                         keyboardType = 'numeric'
                         style={styles.inputText}
-                        onChangeText={(cost) => this.setState({cost: Number(cost)})} />
+                        onChangeText={ cost => this.setState({cost}) } />
                 </View>
-                <TouchableOpacity onPress={() => alert(this.state.name + ' ' + this.state.cost)}>
+                <TouchableOpacity onPress={() =>  this.addAttendee(this.state.name, this.state.cost)}>
                     <View style={styles.buttonContainer}>
                         <Text style={styles.addButton}>+</Text>
                     </View>
@@ -84,7 +94,7 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
         borderWidth: 1,
         borderRadius: 10,
-        fontSize: 30,
+        fontSize: 20,
         marginBottom: 5,
     },
     buttonContainer: {
