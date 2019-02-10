@@ -1,5 +1,13 @@
 import React from 'react';
-import {StyleSheet, View, ScrollView, Text, TextInput, TouchableOpacity} from 'react-native';
+import {
+    StyleSheet,
+    View,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    Image
+} from 'react-native';
 
 export default class Attendees extends React.Component {
 
@@ -19,8 +27,11 @@ export default class Attendees extends React.Component {
                     this.state.attendees.map(
                         (attendee, index) =>(
                             <View style={styles.attendee} key={index}>
-                                <Text style={styles.name}>{attendee.name}</Text>
-                                <Text style={styles.cost}>{attendee.cost} €/hour</Text>
+                                <Image source={require('./assets/attendee_icon.png')} style={{width: 50, height: 50, marginRight: 10}}/>
+                                <View>
+                                    <Text style={styles.name}>{attendee.name}</Text>
+                                    <Text style={styles.cost}>{attendee.cost} €/hour</Text>
+                                </View>
                             </View>
                         )
                     )
@@ -69,6 +80,9 @@ const styles = StyleSheet.create({
     },
     attendee: {
         padding: 20,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     name: {
         fontSize: 18,
