@@ -75,7 +75,6 @@ const AttendantForm = ( {name, onNameChange, cost, onCostChange, addAttendee} ) 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#eef',
     },
     title: {
         paddingTop: 50,
