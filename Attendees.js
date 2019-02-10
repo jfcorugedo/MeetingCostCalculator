@@ -37,30 +37,40 @@ export default class Attendees extends React.Component {
                     )
                 }
             </ScrollView>
-            <View style={styles.form}>
-                <View style={styles.inputWrapper}>
-                    <TextInput
-                        placeholder="Name of the attendee"
-                        value={this.state.name}
-                        style={styles.inputText}
-                        onChangeText={(name) => this.setState({name})} />
-
-                    <TextInput
-                        placeholder="Cost per hour"
-                        value={this.state.cost}
-                        keyboardType = 'numeric'
-                        style={styles.inputText}
-                        onChangeText={ cost => this.setState({cost}) } />
-                </View>
-                <TouchableOpacity onPress={() =>  this.addAttendee(this.state.name, this.state.cost)}>
-                    <View style={styles.buttonContainer}>
-                        <Text style={styles.addButton}>+</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <AttendantForm
+                name={ this.state.name }
+                cost={ this.state.cost }
+                onNameChange={ (name) => this.setState({name}) }
+                onCostChange={ cost => this.setState({cost}) }
+                addAttendee={ () =>  this.addAttendee(this.state.name, this.state.cost) }
+                />
         </View>);
     }
 }
+
+const AttendantForm = ( {name, onNameChange, cost, onCostChange, addAttendee} ) => (
+    <View style={styles.form}>
+        <View style={styles.inputWrapper}>
+            <TextInput
+                placeholder="Name of the attendee"
+                value={name}
+                style={styles.inputText}
+                onChangeText={onNameChange} />
+
+            <TextInput
+                placeholder="Cost per hour"
+                value={cost}
+                keyboardType = 'numeric'
+                style={styles.inputText}
+                onChangeText={ onCostChange } />
+        </View>
+        <TouchableOpacity onPress={ addAttendee }>
+            <View style={styles.buttonContainer}>
+                <Text style={styles.addButton}>+</Text>
+            </View>
+        </TouchableOpacity>
+    </View>
+);
 
 const styles = StyleSheet.create({
     container: {
