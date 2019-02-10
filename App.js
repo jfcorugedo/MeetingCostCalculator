@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 
 import TabBarIcon from './TabBarIcon';
 import Attendees from './Attendees';
 import Meeting from './Meeting';
+import TimeTracking from "./TimeTracking";
 
 Attendees.navigationOptions = {
   tabBarLabel: 'Create',
@@ -16,7 +17,17 @@ Attendees.navigationOptions = {
   ),
 };
 
-Meeting.navigationOptions = {
+const MeetingStack = createStackNavigator(
+    {
+        Meeting: Meeting,
+        TimeTracking: TimeTracking,
+    },
+    {
+        initialRouteName: 'Meeting',
+    }
+);
+
+MeetingStack.navigationOptions = {
     tabBarLabel: 'Meeting',
     tabBarIcon: ({focused}) => (
         <TabBarIcon
@@ -34,7 +45,7 @@ Meeting.navigationOptions = {
 // - Add meeting to the tab navigation
 export default createAppContainer(createBottomTabNavigator({
     Attendees,
-    Meeting
+    MeetingStack
 }));
 
 

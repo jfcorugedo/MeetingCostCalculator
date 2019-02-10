@@ -5,9 +5,9 @@ export default class Meeting extends React.Component {
 
     render() {
         return (<View style={styles.container}>
-            <TouchableOpacity onPress={() => alert('starting the meeting....')}>
+            <TouchableOpacity onPress={()  => this.props.navigation.navigate('TimeTracking') }>
                 <View style={styles.startButton}>
-                    <Text style={styles.startText}>Start meting</Text>
+                    <Text style={styles.startText}>Start meeting</Text>
                 </View>
             </TouchableOpacity>
         </View>);
