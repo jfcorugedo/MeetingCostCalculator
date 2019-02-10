@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 export default class Meeting extends React.Component {
 
     render() {
         return (<View style={styles.container}>
-            <Text>View cost of the current meeting....</Text>
+            <TouchableOpacity onPress={() => alert('starting the meeting....')}>
+                <View style={styles.startButton}>
+                    <Text style={styles.startText}>Start meting</Text>
+                </View>
+            </TouchableOpacity>
         </View>);
     }
 }
@@ -17,5 +21,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    startButton: {
+        textAlign: 'center',
+        backgroundColor: '#2f95dc',
+        borderRadius: 10,
+    },
+    startText: {
+        color: 'white',
+        fontSize: 30,
+        padding: 10,
     },
 });
