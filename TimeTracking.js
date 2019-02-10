@@ -8,16 +8,17 @@ class TimeTracking extends React.Component {
     constructor() {
         super();
         this.state = {
-            costPerDay: 100,
+            costPerSecond: 0.134,
             currentCost: 0,
             startTime: Date.now(),
-            endTime: undefined,
         };
     }
 
     tick() {
+        const timeInSeconds = (Date.now() - this.state.startTime)/1000;
+
         this.setState({
-            currentCost: this.state.currentCost + 10
+            currentCost: this.state.costPerSecond * timeInSeconds
         }, () => {
             this.timer = setTimeout(() => this.tick(), 1000)
         });
@@ -27,20 +28,20 @@ class TimeTracking extends React.Component {
         return (
             <View style={ styles.container }>
                 <NavigationEvents
-                    onWillFocus={payload => {
+                    onWillFocus={() => {
                         console.log('will focus');
-                        this.timer = setTimeout(() => this.tick(), 1000);
+                        this.tick();
                     }}
-                    onDidFocus={payload => console.log('did focus')}
-                    onWillBlur={payload => {
+                    onDidFocus={() => console.log('did focus')}
+                    onWillBlur={() => {
                         console.log('will blur');
                         clearTimeout(this.timer);
                     }}
-                    onDidBlur={payload => console.log('did blur')}
+                    onDidBlur={() => console.log('did blur')}
                 />
 
 
-                <Text style={styles.text}>{ this.state.currentCost } €</Text>
+                <Text style={styles.text}>{ Number(this.state.currentCost).toFixed(2) } €</Text>
                 <CoolButton
                     label={ 'End meeting' }
                     action={ () => this.props.navigation.goBack() }
