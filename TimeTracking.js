@@ -38,7 +38,9 @@ class TimeTracking extends React.Component {
                     }}
                     onDidBlur={payload => console.log('did blur')}
                 />
-                <Text>{ this.state.currentCost }</Text>
+
+
+                <Text style={styles.text}>{ this.state.currentCost } €</Text>
                 <CoolButton
                     label={ 'End meeting' }
                     action={ () => this.props.navigation.goBack() }
@@ -54,6 +56,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    text: {
+        fontSize: 50,
+        fontWeight: 'bold',
+        padding: 20,
     },
 });
 
