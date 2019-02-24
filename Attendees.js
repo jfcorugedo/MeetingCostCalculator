@@ -9,8 +9,9 @@ import {
     Image
 } from 'react-native';
 import CoolButton from './CoolButton';
+import {connect} from 'react-redux';
 
-export default class Attendees extends React.Component {
+class Attendees extends React.Component {
 
     static navigationOptions = {
         title: 'Attendees',
@@ -18,25 +19,27 @@ export default class Attendees extends React.Component {
 
     constructor() {
         super();
-        this.state = {name: '', cost: '', attendees: []};
+        this.state = {name: '', cost: ''};
     }
 
     addAttendee(name, cost) {
         this.setState({attendees: [...this.state.attendees, {name, cost}], name: '', cost: ''})
     }
     render() {
+        const {attendees} =  this.props;
+
         return (<View style={styles.container}>
             <View style={[styles.startButton]}>
                 <CoolButton
-                    buttonStyle={this.state.attendees.length > 0 ? [styles.enabled] : [styles.disabled]}
-                    textStyle={this.state.attendees.length > 0 ? [{color: 'white'}] : [{color: 'black'}]}
+                    buttonStyle={attendees.length > 0 ? [styles.enabled] : [styles.disabled]}
+                    textStyle={attendees.length > 0 ? [{color: 'white'}] : [{color: 'black'}]}
                     label={"Start meetig"}
-                    action={ ()  => this.state.attendees.length > 0 ? this.props.navigation.navigate('TimeTracking') : alert('You need to specify at least one participant') } />
+                    action={ ()  => attendees.length > 0 ? this.props.navigation.navigate('TimeTracking') : alert('You need to specify at least one participant') } />
             </View>
 
             <ScrollView style={styles.attendeesContainer}>
                 {
-                    this.state.attendees.map(
+                    attendees.map(
                         (attendee, index) =>(
                             <View style={styles.attendee} key={index}>
                                 <Image source={require('./assets/attendee_icon.png')} style={{width: 50, height: 50, marginRight: 10}}/>
@@ -60,6 +63,12 @@ export default class Attendees extends React.Component {
         </View>);
     }
 }
+
+const mapStateToProps = (state) => {
+    return ({ attendees: state.meeting.attendees });
+};
+
+export default connect(mapStateToProps)(Attendees);
 
 const AttendantForm = ( {name, onNameChange, cost, onCostChange, addAttendee} ) => (
     <View style={styles.form}>
