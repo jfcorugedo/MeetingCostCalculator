@@ -1,7 +1,5 @@
 const initialState = {
-    attendees: [],
+    attendees: [{name: 'Juan', cost: '55'}, {name: 'Pablo', cost: '75'}],
 };
 
-const addAttendeeReducer = (state = initialState) => state;
-
-export default addAttendeeReducer;
+export default  (state = initialState) => state;

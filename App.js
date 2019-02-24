@@ -8,6 +8,10 @@ import LastMeetings from './LastMeetings';
 import TimeTracking from "./TimeTracking";
 import MeetingSummary from './MeetingSummary';
 
+import rootReducer from './redux/reducers';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+
 const AttendeesStack = createStackNavigator(
     {
         Attendees: Attendees,
@@ -49,15 +53,29 @@ MeetingStack.navigationOptions = {
     ),
 };
 
+const store = createStore(rootReducer);
+console.log('state', store.getState());
 // - Create Attendees file with basic style and content
 // - Create an AppContainer
 // - createBottomTabNavigator
 // - TabBarIcon component and navigationOptions
 // - Create LastMeetings file with baisc style and content
 // - Add meeting to the tab navigation
-export default createAppContainer(createBottomTabNavigator({
+const AppNavigation = createAppContainer(createBottomTabNavigator({
     AttendeesStack,
     MeetingStack
 }));
+
+class App extends React.Component {
+    render() {
+        return (
+            <Provider store={store}>
+                <AppNavigation></AppNavigation>
+            </Provider>
+        )
+    }
+}
+
+export default App;
 
 
