@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import CoolButton from './CoolButton';
 import {connect} from 'react-redux';
+import {addAttendee} from "./redux/actions/actions";
 
 class Attendees extends React.Component {
 
@@ -23,7 +24,8 @@ class Attendees extends React.Component {
     }
 
     addAttendee(name, cost) {
-        this.setState({attendees: [...this.state.attendees, {name, cost}], name: '', cost: ''})
+        this.props.dispatchAddAttendee(name, cost);
+        this.setState({name: '', cost: ''})
     }
     render() {
         const {attendees} =  this.props;
@@ -68,7 +70,11 @@ const mapStateToProps = (state) => {
     return ({ attendees: state.meeting.attendees });
 };
 
-export default connect(mapStateToProps)(Attendees);
+const mapDispatchToProps = {
+    dispatchAddAttendee: (name, cost) => addAttendee(name, cost)
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Attendees);
 
 const AttendantForm = ( {name, onNameChange, cost, onCostChange, addAttendee} ) => (
     <View style={styles.form}>
