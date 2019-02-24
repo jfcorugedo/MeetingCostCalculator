@@ -4,31 +4,43 @@ import { createBottomTabNavigator, createAppContainer, createStackNavigator } fr
 
 import TabBarIcon from './TabBarIcon';
 import Attendees from './Attendees';
-import Meeting from './Meeting';
+import LastMeetings from './LastMeetings';
 import TimeTracking from "./TimeTracking";
+import MeetingSummary from './MeetingSummary';
 
-Attendees.navigationOptions = {
-  tabBarLabel: 'Create',
-  tabBarIcon: ({focused}) => (
-      <TabBarIcon
-          focused={focused}
-          name={'md-person-add'}
-      />
-  ),
+const AttendeesStack = createStackNavigator(
+    {
+        Attendees: Attendees,
+        TimeTracking: TimeTracking,
+        MeetingSummary: MeetingSummary,
+    },
+    {
+        initialRouteName: 'Attendees',
+    }
+);
+
+AttendeesStack.navigationOptions = {
+    tabBarLabel: 'Start a meeting',
+    tabBarIcon: ({focused}) => (
+        <TabBarIcon
+            focused={focused}
+            name={'md-person-add'}
+        />
+    ),
 };
 
 const MeetingStack = createStackNavigator(
     {
-        Meeting: Meeting,
+        LastMeetings: LastMeetings,
         TimeTracking: TimeTracking,
     },
     {
-        initialRouteName: 'Meeting',
+        initialRouteName: 'LastMeetings',
     }
 );
 
 MeetingStack.navigationOptions = {
-    tabBarLabel: 'Meeting',
+    tabBarLabel: 'Last meetings',
     tabBarIcon: ({focused}) => (
         <TabBarIcon
             focused={focused}
@@ -41,10 +53,10 @@ MeetingStack.navigationOptions = {
 // - Create an AppContainer
 // - createBottomTabNavigator
 // - TabBarIcon component and navigationOptions
-// - Create Meeting file with baisc style and content
+// - Create LastMeetings file with baisc style and content
 // - Add meeting to the tab navigation
 export default createAppContainer(createBottomTabNavigator({
-    Attendees,
+    AttendeesStack,
     MeetingStack
 }));
 

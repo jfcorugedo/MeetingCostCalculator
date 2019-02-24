@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-const CoolButton = ({label, action}) => (
+const CoolButton = ({label, action, buttonStyle = [], textStyle = []}) => (
     <TouchableOpacity onPress={ action }>
-        <View style={styles.startButton}>
-            <Text style={styles.startText}>{label}</Text>
+        <View style={[styles.startButton, ...buttonStyle]}>
+            <Text style={[styles.startText, ...textStyle]}>{label}</Text>
         </View>
     </TouchableOpacity>
 );

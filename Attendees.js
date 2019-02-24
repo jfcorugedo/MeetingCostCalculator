@@ -8,8 +8,13 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
+import CoolButton from './CoolButton';
 
 export default class Attendees extends React.Component {
+
+    static navigationOptions = {
+        title: 'Attendees',
+    };
 
     constructor() {
         super();
@@ -21,7 +26,14 @@ export default class Attendees extends React.Component {
     }
     render() {
         return (<View style={styles.container}>
-            <Text style={styles.title}>Attendees</Text>
+            <View style={[styles.startButton]}>
+                <CoolButton
+                    buttonStyle={this.state.attendees.length > 0 ? [styles.enabled] : [styles.disabled]}
+                    textStyle={this.state.attendees.length > 0 ? [{color: 'white'}] : [{color: 'black'}]}
+                    label={"Start meetig"}
+                    action={ ()  => this.state.attendees.length > 0 ? this.props.navigation.navigate('TimeTracking') : alert('You need to specify at least one participant') } />
+            </View>
+
             <ScrollView style={styles.attendeesContainer}>
                 {
                     this.state.attendees.map(
@@ -37,6 +49,7 @@ export default class Attendees extends React.Component {
                     )
                 }
             </ScrollView>
+
             <AttendantForm
                 name={ this.state.name }
                 cost={ this.state.cost }
@@ -60,7 +73,7 @@ const AttendantForm = ( {name, onNameChange, cost, onCostChange, addAttendee} ) 
             <TextInput
                 placeholder="Cost per hour"
                 value={cost}
-                keyboardType = 'numeric'
+                keyboardType = 'number-pad'
                 style={styles.inputText}
                 onChangeText={ onCostChange } />
         </View>
@@ -76,16 +89,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    title: {
-        paddingTop: 50,
-        paddingBottom: 20,
-        fontSize: 20,
-        textAlign: 'center',
-    },
     attendeesContainer: {
         flex: 1,
-        borderTopWidth: 1,
-        borderTopColor: '#999',
     },
     attendee: {
         padding: 20,
@@ -134,5 +139,18 @@ const styles = StyleSheet.create({
     addButton: {
         fontSize: 28,
         lineHeight: 28,
+    },
+    startButton: {
+        flex: 1,
+        maxHeight: 80,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    disabled: {
+        backgroundColor: '#ededed',
+    },
+    enabled: {
+
     },
 });

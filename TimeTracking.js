@@ -44,7 +44,7 @@ class TimeTracking extends React.Component {
                 <Text style={styles.text}>{ Number(this.state.currentCost).toFixed(2) } €</Text>
                 <CoolButton
                     label={ 'End meeting' }
-                    action={ () => this.props.navigation.goBack() }
+                    action={ () => this.props.navigation.navigate('MeetingSummary') }
                 />
             </View>
         );

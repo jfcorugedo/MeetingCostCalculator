@@ -2,14 +2,15 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import CoolButton from "./CoolButton";
 
-export default class Meeting extends React.Component {
+export default class LastMeetings extends React.Component {
+
+    static navigationOptions = {
+        title: 'Last meetings',
+    };
 
     render() {
         return (<View style={styles.container}>
-            <CoolButton
-                action={ ()  => this.props.navigation.navigate('TimeTracking') }
-                label={'Start meeting'}
-            />
+            <Text>Unimplemented</Text>
         </View>);
     }
 }
