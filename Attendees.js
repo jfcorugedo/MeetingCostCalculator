@@ -67,7 +67,7 @@ class Attendees extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return ({ attendees: state.meeting.attendees });
+    return ({ attendees: state.attendees });
 };
 
 const mapDispatchToProps = {

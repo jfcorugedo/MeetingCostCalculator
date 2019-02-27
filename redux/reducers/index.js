@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import addAttendeeReducer from './addAttendeeReducer';
+import updateMeetingCostReducer from './updateMeetingCostReducer';
 
 const rootReducer = combineReducers({
-    meeting: addAttendeeReducer
+    attendees: addAttendeeReducer,
+    meetingCost: updateMeetingCostReducer
 });
 
 export default rootReducer;
