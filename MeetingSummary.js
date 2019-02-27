@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native'
 import CoolButton from "./CoolButton";
 import {connect} from 'react-redux';
-import {addAttendee, resetMeeting} from "./redux/actions/actions";
+import {resetMeeting} from "./redux/actions/actions";
 
 class MeetingSummary extends React.Component {
 
