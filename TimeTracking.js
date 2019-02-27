@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import  { NavigationEvents } from 'react-navigation';
 import CoolButton from "./CoolButton";
 import {connect} from 'react-redux';
+import {updateMeetingCost} from "./redux/actions/actions";
 
 class TimeTracking extends React.Component {
 
@@ -44,7 +45,10 @@ class TimeTracking extends React.Component {
                 <Text style={styles.text}>{ Number(this.state.currentCost).toFixed(2) } €</Text>
                 <CoolButton
                     label={ 'End meeting' }
-                    action={ () => this.props.navigation.navigate('MeetingSummary') }
+                    action={ () => {
+                        this.props.dispatchUpdateMeetingCost(this.state.currentCost);
+                        this.props.navigation.navigate('MeetingSummary')
+                    } }
                 />
             </View>
         );
@@ -66,11 +70,15 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-    const costPerSecond = state.meeting.attendees
+    const costPerSecond = state.attendees
         .map(attendee => Number(attendee.cost))
         .reduce( (accumulator, cost) => accumulator + cost) / (60*60);
     console.log('costPerSecond', costPerSecond);
     return ({ costPerSecond });
 };
 
-export default connect(mapStateToProps)(TimeTracking);
+const mapDispatchToProps = {
+    dispatchUpdateMeetingCost: (cost) => updateMeetingCost(cost)
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimeTracking);
