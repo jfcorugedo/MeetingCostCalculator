@@ -4,7 +4,7 @@ export default  (state = 0, action) => {
 
     switch(action.type){
         case UPDATE_MEETING_COST:
-            return action.currentCost;
+            return Number(action.currentCost).toFixed(2);
         default:
             return state;
     }

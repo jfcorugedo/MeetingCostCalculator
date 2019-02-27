@@ -1,30 +1,31 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native'
 import CoolButton from "./CoolButton";
+import {connect} from 'react-redux';
 
-export default class MeetingSummary extends React.Component {
+class MeetingSummary extends React.Component {
 
     static navigationOptions = {
         title: 'Meeting summary',
     };
 
-    constructor() {
-        super();
-        this.state = {cost: '5346.2'};
-    }
-
     render() {
         return (<View style={styles.container}>
             <Text style={[styles.summary, styles.gap]}>Total cost of this meeting </Text>
-            <Text style={[styles.cost, styles.gap]}>{this.state.cost}</Text>
+            <Text style={[styles.cost, styles.gap]}>{this.props.meetingCost}</Text>
             <CoolButton
-                label={'End meeting'}
+                label={'Reset'}
                 action={() => this.props.navigation.popToTop()}
             />
         </View>);
     }
 }
 
+const mapStateToProps = (state) => {
+    return ({ meetingCost: state.meetingCost });
+};
+
+export default connect(mapStateToProps)(MeetingSummary);
 
 const styles = StyleSheet.create({
     container: {
