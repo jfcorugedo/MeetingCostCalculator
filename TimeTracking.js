@@ -2,13 +2,13 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import  { NavigationEvents } from 'react-navigation';
 import CoolButton from "./CoolButton";
+import {connect} from 'react-redux';
 
 class TimeTracking extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            costPerSecond: 0.134,
             currentCost: 0,
             startTime: Date.now(),
         };
@@ -18,7 +18,7 @@ class TimeTracking extends React.Component {
         const timeInSeconds = (Date.now() - this.state.startTime)/1000;
 
         this.setState({
-            currentCost: this.state.costPerSecond * timeInSeconds
+            currentCost: this.props.costPerSecond * timeInSeconds
         }, () => {
             this.timer = setTimeout(() => this.tick(), 1000)
         });
@@ -65,4 +65,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TimeTracking;
+const mapStateToProps = (state) => {
+    const costPerSecond = state.meeting.attendees
+        .map(attendee => Number(attendee.cost))
+        .reduce( (accumulator, cost) => accumulator + cost) / (60*60);
+    console.log('costPerSecond', costPerSecond);
+    return ({ costPerSecond });
+};
+
+export default connect(mapStateToProps)(TimeTracking);
