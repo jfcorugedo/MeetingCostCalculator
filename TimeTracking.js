@@ -70,10 +70,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-    const costPerSecond = state.attendees
-        .map(attendee => Number(attendee.cost))
-        .reduce( (accumulator, cost) => accumulator + cost) / (60*60);
-    console.log('costPerSecond', costPerSecond);
+    let costPerSecond = 0;
+    if(state.attendees.length > 0) {
+        costPerSecond = state.attendees
+            .map(attendee => Number(attendee.cost))
+            .reduce((accumulator, cost) => accumulator + cost) / (60 * 60);
+        console.log('costPerSecond', costPerSecond);
+    }
     return ({ costPerSecond });
 };
 

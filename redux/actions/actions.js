@@ -1,5 +1,6 @@
 export const ADD_ATTENDEE = 'ADD_ATTENDEE';
 export const UPDATE_MEETING_COST = 'UPDATE_MEETING_COST';
+export const RESET_MEETING = 'RESET_MEETING';
 
 export function addAttendee(name, cost) {
     return {
@@ -7,7 +8,7 @@ export function addAttendee(name, cost) {
         attendee: {
             name,
             cost
-        }
+        },
     }
 }
 
@@ -15,5 +16,11 @@ export function updateMeetingCost(currentCost) {
     return {
         type: UPDATE_MEETING_COST,
         currentCost,
+    }
+}
+
+export function resetMeeting() {
+    return {
+        type: RESET_MEETING,
     }
 }
