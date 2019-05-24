@@ -1,83 +1,62 @@
 import React from 'react';
-import { KeyboardAvoidingView } from 'react-native';
-import { createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { AppLoading, Asset, Font, Icon } from 'expo';
+import AppNavigator from './navigation/AppNavigator';
 
-import TabBarIcon from './TabBarIcon';
-import Attendees from './Attendees';
-import LastMeetings from './LastMeetings';
-import TimeTracking from "./TimeTracking";
-import MeetingSummary from './MeetingSummary';
+export default class App extends React.Component {
+  state = {
+    isLoadingComplete: false,
+  };
 
-import rootReducer from './redux/reducers';
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-
-const AttendeesStack = createStackNavigator(
-    {
-        Attendees: Attendees,
-        TimeTracking: TimeTracking,
-        MeetingSummary: MeetingSummary,
-    },
-    {
-        initialRouteName: 'Attendees',
-    }
-);
-
-AttendeesStack.navigationOptions = {
-    tabBarLabel: 'Start a meeting',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={'md-person-add'}
+  render() {
+    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+      return (
+        <AppLoading
+          startAsync={this._loadResourcesAsync}
+          onError={this._handleLoadingError}
+          onFinish={this._handleFinishLoading}
         />
-    ),
-};
-
-const MeetingStack = createStackNavigator(
-    {
-        LastMeetings: LastMeetings,
-        TimeTracking: TimeTracking,
-    },
-    {
-        initialRouteName: 'LastMeetings',
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppNavigator />
+        </View>
+      );
     }
-);
+  }
 
-MeetingStack.navigationOptions = {
-    tabBarLabel: 'Last meetings',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={'md-people'}
-        />
-    ),
-};
+  _loadResourcesAsync = async () => {
+    return Promise.all([
+      Asset.loadAsync([
+        require('./assets/images/robot-dev.png'),
+        require('./assets/images/robot-prod.png'),
+      ]),
+      Font.loadAsync({
+        // This is the font that we are using for our tab bar
+        ...Icon.Ionicons.font,
+        // We include SpaceMono because we use it in HomeScreen.js. Feel free
+        // to remove this if you are not using it in your app
+        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      }),
+    ]);
+  };
 
-const store = createStore(rootReducer);
-console.log('state', store.getState());
-// - Create Attendees file with basic style and content
-// - Create an AppContainer
-// - createBottomTabNavigator
-// - TabBarIcon component and navigationOptions
-// - Create LastMeetings file with baisc style and content
-// - Add meeting to the tab navigation
-const AppNavigation = createAppContainer(createBottomTabNavigator({
-    AttendeesStack,
-    MeetingStack
-}));
+  _handleLoadingError = error => {
+    // In this case, you might want to report the error to your error
+    // reporting service, for example Sentry
+    console.warn(error);
+  };
 
-class App extends React.Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
-                    <AppNavigation></AppNavigation>
-                </KeyboardAvoidingView>
-            </Provider>
-        )
-    }
+  _handleFinishLoading = () => {
+    this.setState({ isLoadingComplete: true });
+  };
 }
 
-export default App;
-
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
