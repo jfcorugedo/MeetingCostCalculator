@@ -9,6 +9,8 @@ import {
     TextInput
 } from 'react-native';
 import CoolButton from '../components/CoolButton';
+import { connect } from 'react-redux';
+import { createAddAttendeeAction } from "../model/actions/actions";
 
 class Attendees extends Component {
 
@@ -19,14 +21,18 @@ class Attendees extends Component {
 
     constructor() {
         super();
-        this.state = {attendees: [ {name: 'Juan', cost: '80'}, {name: 'Pablo', cost: '100'}]};
+        this.state = {name: '', cost: ''};
     }
 
     addAttendee(name, cost) {
-        this.setState({attendees: [...this.state.attendees, {name, cost}], name: '', cost: ''})
+        this.props.dispatchAddAttendee(name, cost);
+        this.setState({name: '', cost: ''})
     }
 
     render() {
+
+        const {attendees} =  this.props;
+
         return (
             <View style={styles.container}>
                 <View style={[styles.startButton]}>
@@ -37,7 +43,7 @@ class Attendees extends Component {
 
                 <ScrollView style={styles.attendeesContainer}>
                     {
-                        this.state.attendees.map(
+                        attendees.map(
                             (attendee, index) =>(
                                 <View style={styles.attendee} key={index}>
                                     <Image
@@ -154,4 +160,13 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Attendees;
+
+const mapStateToProps = (state) => {
+    return ({ attendees: state.attendees });
+};
+
+const mapDispatchToProps = {
+    dispatchAddAttendee: (name, cost) => createAddAttendeeAction(name, cost)
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Attendees);
