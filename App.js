@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import rootReducer from './model/reducers';
@@ -29,7 +29,9 @@ export default class App extends React.Component {
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <Provider store={store}>
-            <AppNavigator />
+            <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
+              <AppNavigator />
+            </KeyboardAvoidingView>
           </Provider>
         </View>
       );
