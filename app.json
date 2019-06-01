@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "MeetingCostCalculator",
+    "description": "This application can help you compute the cost of a work meeting, given the cost of each attendee and how long it lasts",
     "slug": "MeetingCostCalculator",
     "privacy": "public",
     "sdkVersion": "32.0.0",
