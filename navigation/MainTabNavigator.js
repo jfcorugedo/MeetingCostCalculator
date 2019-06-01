@@ -6,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import Attendees from '../screens/Attendees';
 import TimeTracking from '../screens/TimeTracking';
 import MeetingSummary from '../screens/MeetingSummary';
-import LinksScreen from '../screens/LinksScreen';
+import LastMeetings from '../screens/LastMeetings';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const AttendeesStack = createStackNavigator(
@@ -30,16 +30,21 @@ AttendeesStack.navigationOptions = {
     ),
 };
 
-const LinksStack = createStackNavigator({
-    Links: LinksScreen,
-});
+const MeetingStack = createStackNavigator(
+    {
+        LastMeetings: LastMeetings,
+    },
+    {
+        initialRouteName: 'LastMeetings',
+    }
+);
 
-LinksStack.navigationOptions = {
-    tabBarLabel: 'Links',
+MeetingStack.navigationOptions = {
+    tabBarLabel: 'Last meetings',
     tabBarIcon: ({focused}) => (
         <TabBarIcon
             focused={focused}
-            name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+            name={'md-people'}
         />
     ),
 };
@@ -60,6 +65,6 @@ SettingsStack.navigationOptions = {
 
 export default createBottomTabNavigator({
     AttendeesStack,
-    LinksStack,
+    MeetingStack,
     SettingsStack,
 });
