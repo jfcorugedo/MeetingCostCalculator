@@ -7,12 +7,14 @@ Simple app to calculate the cost of a meeting based on the amount of attendees a
 
 It is built using ReactNative and Expo tools.
 
+The application is published in [Expo marketplace.](https://expo.io/@jfcorugedo/MeetingCostCalculator)
+
 To start the application just run
 
 `$ npm start`
 
 This command will open a browser window with several options: run on android emulator, run on ios simulator, etc...
 
-If you want to run the application on a phisical device you will need to install Expo application.
+If you want to run the application on a physical device you will need to install Expo application.
 
 For more information just take a look at the [ReactNative official documentation](https://facebook.github.io/react-native/docs/getting-started).
