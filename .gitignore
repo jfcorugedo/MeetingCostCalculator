@@ -6,5 +6,7 @@ npm-debug.*
 *.p12
 *.key
 *.mobileprovision
+.DS_Store
+assets/.DS_Store
 
 .idea
